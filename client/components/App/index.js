@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class App extends Component {
-  render() {
-    return (
-      <h1>React Simple Boilerplate!!!</h1>
-    );
-  }
-}
+const App = ({children}) => {
+  return (
+    <div>
+      {children}
+    </div>
+  );
+};
 
 export default App;
