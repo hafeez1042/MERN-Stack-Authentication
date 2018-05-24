@@ -22,7 +22,6 @@ gulp.task('start', () => {
     ignore: [
       'client/',
       'node_modules/',
-      'server/',
       'dist/public/'
     ],
     env: { 'NODE_ENV': 'development', 'PORT': '8000' }
