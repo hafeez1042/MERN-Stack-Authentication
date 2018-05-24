@@ -6,7 +6,7 @@ module.exports = {
   entry: './client/index.js',
   output: {
     path: path.join(__dirname, '/dist/public'),
-    filename: 'client.js'
+    filename: 'client.js',
   },
   module: {
     rules: [
@@ -14,11 +14,19 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader'
-        }
-      }
+          loader: 'babel-loader',
+        },
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          'style-loader',
+          { loader: 'css-loader', options: { importLoaders: 1 } },
+          'postcss-loader',
+        ],
+      },
 
-    ]
+    ],
   },
-  plugins: []
+  plugins: [],
 };
