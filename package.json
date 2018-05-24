@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "webpack": "webpack --mode development --open --hot --watch",
+    "webpack": "webpack --mode development --open --watch",
     "start": "concurrently \"npm run webpack\" \"gulp --watch\"",
     "start-server": "gulp --watch"
   },
