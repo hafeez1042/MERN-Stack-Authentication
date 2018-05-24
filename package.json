@@ -3,29 +3,39 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "gulp --watch"
+    "webpack": "webpack --mode development --open --hot --watch",
+    "start": "concurrently \"npm run webpack\" \"gulp --watch\"",
+    "start-server": "gulp --watch"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
+    "ejs": "^2.6.1",
     "express": "~4.16.0",
     "http-errors": "~1.6.2",
-    "jade": "~1.11.0",
     "mongoose": "^5.1.2",
-    "morgan": "~1.9.0"
+    "morgan": "~1.9.0",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0",
+    "react-router-dom": "^4.2.2"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.7.0",
     "babel-preset-flow": "^6.23.0",
     "babel-preset-react": "^6.24.1",
+    "concurrently": "^3.5.1",
     "eslint": "^4.19.1",
     "eslint-plugin-react": "^7.8.2",
     "flow-bin": "^0.72.0",
     "gulp": "^3.9.1",
     "gulp-babel": "^7.0.1",
     "gulp-cli": "^2.0.1",
-    "gulp-nodemon": "^2.2.1"
+    "gulp-nodemon": "^2.2.1",
+    "webpack": "^4.8.3",
+    "webpack-cli": "^2.1.4"
   }
 }
