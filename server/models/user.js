@@ -30,3 +30,7 @@ export const create = ({ name, email, password }) => {
   });
   return user.save();
 };
+
+export const findByEmail = (email) => {
+  return User.findOne({ email });
+};

@@ -1,4 +1,4 @@
-const userModel = require('../../../models/users');
+const userModel = require('../../../models/user');
 
 export const register = (req, res) => {
   userModel.create({
