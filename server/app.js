@@ -5,11 +5,16 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const mongoose = require('mongoose');
 
 const webRouter = require('./routes/web');
 const apiV1Router = require('./routes/api/v1');
+const config = require('./config');
 
 const app = express();
+
+// mongoDB initialization
+mongoose.connect(config.mongoDBURL);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -25,12 +30,12 @@ app.use('/api/v1', apiV1Router);
 app.use('/', webRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res) {
+app.use((err, req, res) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
