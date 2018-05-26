@@ -6,7 +6,8 @@ export const register = (req, res) => {
     email: req.body.email,
     password: req.body.password,
   }).then(user => {
-    res.json(user);
+    const { name, email } = user;
+    res.json({ name, email });
   }).catch(error => {
     res.json(error);
   });

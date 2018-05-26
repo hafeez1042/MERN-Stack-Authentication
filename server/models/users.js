@@ -25,9 +25,8 @@ const userSchema = new Schema({
 const User = mongoose.model('User', userSchema);
 
 export const create = ({ name, email, password }) => {
-  const user = new User();
-  user.name = name;
-  user.email = email;
-  user.password = password;
+  const user = new User({
+    name, email, password,
+  });
   return user.save();
 };
