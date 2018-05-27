@@ -4,8 +4,9 @@ module.exports = {
     INVALID_EMAIL_OR_PASSWORD: 'Invalid email or password!...',
     INVALID_EMAIL: 'Invalid email!...',
     INVALID_PASSWORD: 'Invalid password!...',
+    INVALID_ACCESS_TOKEN: 'Invalid access token!...',
   },
   success: {
-    LOGIN_SUCCESS: 'Login success!...'
+    LOGIN_SUCCESS: 'Login success!...',
   },
 };
