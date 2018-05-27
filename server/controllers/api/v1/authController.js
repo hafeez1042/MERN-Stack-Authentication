@@ -4,7 +4,7 @@ const errorCodes = require('../../../const/errorCodes');
 const messages = require('../../../const/messages');
 const jwt = require('../../../helpers/jwt');
 
-export const register = (req, res) => {
+const register = (req, res) => {
   userModel.create({
     name: req.body.name,
     email: req.body.email,
@@ -20,7 +20,7 @@ export const register = (req, res) => {
   });
 };
 
-export const login = (req, res) => {
+const login = (req, res) => {
   const { email, password } = req.body;
   userModel.findByEmail(email, 'password email name').then(user => {
     bcrypt.compare(password, user.password).then(() => {
@@ -36,4 +36,9 @@ export const login = (req, res) => {
   }).catch(() => {
     res.status(errorCodes.http.UNAUTHORIZED).json({ message: messages.error.INVALID_EMAIL });
   });
+};
+
+module.exports = {
+  register,
+  login,
 };
