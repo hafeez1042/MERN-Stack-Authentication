@@ -19,18 +19,22 @@ const userSchema = new Schema({
     type: String,
     required: true,
     set: (v) => bcrypt.hashSync(v, 12),
+    select: false,
   },
 });
 
 const User = mongoose.model('User', userSchema);
 
-export const create = ({ name, email, password }) => {
-  const user = new User({
-    name, email, password,
-  });
+const create = ({ name, email, password }) => {
+  const user = new User({ name, email, password });
   return user.save();
 };
 
-export const findByEmail = (email) => {
-  return User.findOne({ email });
+const findByEmail = (email, select) => {
+  return User.findOne({ email }).select(select);
+};
+
+module.exports = {
+  create,
+  findByEmail,
 };
