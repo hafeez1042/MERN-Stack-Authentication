@@ -24,13 +24,16 @@ export const login = (req, res) => {
   const { email, password } = req.body;
   userModel.findByEmail(email, 'password email name').then(user => {
     bcrypt.compare(password, user.password).then(() => {
-      jwt.generateJWT(user, null, (error, response) => {
-        res.json({ email, name: user.name, accessToken: response });
-      });
+      jwt.generateJWT(user)
+        .then(response => {
+          res.json({ email, name: user.name, accessToken: response });
+        }).catch(error => {
+          res.status(errorCodes.http.BAD_REQUEST).json({ message: messages.error.UNKNOWN_ERROR, error });
+        });
     }).catch(() => {
-      res.status(errorCodes.http.UNAUTHORIZED).json({ message: messages.error.INVALID_PASSWORD});
+      res.status(errorCodes.http.UNAUTHORIZED).json({ message: messages.error.INVALID_PASSWORD });
     });
   }).catch(() => {
-    res.status(errorCodes.http.UNAUTHORIZED).json({ message: messages.error.INVALID_EMAIL});
+    res.status(errorCodes.http.UNAUTHORIZED).json({ message: messages.error.INVALID_EMAIL });
   });
 };

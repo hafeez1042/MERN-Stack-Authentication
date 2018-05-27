@@ -1,5 +1,6 @@
 module.exports = {
   error: {
+    UNKNOWN_ERROR: 'Unknown error!...',
     USER_ALREADY_EXISTS: 'User already exists!...',
     INVALID_EMAIL_OR_PASSWORD: 'Invalid email or password!...',
     INVALID_EMAIL: 'Invalid email!...',
