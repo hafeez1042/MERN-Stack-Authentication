@@ -1,4 +1,5 @@
 const userModel = require('../../../models/user');
+const errorCodes = require('../../../const/errorCodes');
 
 export const register = (req, res) => {
   userModel.create({
@@ -9,6 +10,9 @@ export const register = (req, res) => {
     const { name, email } = user;
     res.json({ name, email });
   }).catch(error => {
-    res.json(error);
+    if (error.code === errorCodes.mongo.DUPLICATE) {
+      res.status(errorCodes.http.CONFLICT).json({ message: 'User already exist!...' });
+    }
+    res.status(errorCodes.http.BAD_REQUEST).json(error);
   });
 };
