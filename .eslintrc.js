@@ -5,7 +5,11 @@ module.exports = {
     "es6": true,
     "node": true
   },
-  "extends": "eslint:recommended",
+  "extends": [
+    "eslint:recommended",
+    "plugin:flowtype/recommended"
+  ],
+  "parser": "babel-eslint",
   "parserOptions": {
     "ecmaFeatures": {
       "experimentalObjectRestSpread": true,
@@ -14,7 +18,8 @@ module.exports = {
     "sourceType": "module"
   },
   "plugins": [
-    "react"
+    "react",
+    "flowtype"
   ],
   "rules": {
     "indent": [
@@ -35,8 +40,8 @@ module.exports = {
     ],
 
     /**
- * Strict mode
- */
+   * Strict mode
+   */
     "strict": [2, "safe"],          // http://eslint.org/docs/rules/strict
 
     /**
