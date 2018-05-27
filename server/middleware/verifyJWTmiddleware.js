@@ -13,6 +13,6 @@ module.exports = (req, res, next) => {
         res.status(errorCodes.http.UNAUTHORIZED).json({ message: messages.error.INVALID_ACCESS_TOKEN, error });
       });
   } else {
-    res.status(errorCodes.http.UNAUTHORIZED).json({ message: messages.error.INVALID_ACCESS_TOKEN });
+    res.status(errorCodes.http.UNAUTHORIZED).json({ message: messages.error.UNAUTHORIZED });
   }
 };

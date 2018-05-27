@@ -6,6 +6,7 @@ module.exports = {
     INVALID_EMAIL: 'Invalid email!...',
     INVALID_PASSWORD: 'Invalid password!...',
     INVALID_ACCESS_TOKEN: 'Invalid access token!...',
+    UNAUTHORIZED: 'You are unauthorized to access this route!...'
   },
   success: {
     LOGIN_SUCCESS: 'Login success!...',
