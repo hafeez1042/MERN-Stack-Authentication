@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import Spinner from '../Spinner';
 import { asyncValidatingStyle } from './style.scss';
 
 type Props = {
@@ -12,6 +13,7 @@ type Props = {
   defaultValue: string,
   children: React.Node,
 };
+
 export default ({input, label, fieldId, defaultValue, children, meta: {asyncValidating, touched, error}}: Props) => {
   return (
     <div className={`${touched && error ? 'has-error' : ''} form-group`}>
