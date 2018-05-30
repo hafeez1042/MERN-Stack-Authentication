@@ -40,14 +40,14 @@ class RegisterForm extends Component {
           ]} />
         </fieldset>
 
-        <button className="btn btn-primary mt-3">Register</button>
+        <button className="btn btn-primary mt-3" disabled={submitting}>Register</button>
         <Link to="/login" className="btn btn-link mt-3">Login</Link>
       </form>
     );
   }
 
   submitForm(value) {
-    console.log(value)
+    console.log(value);
   }
 }
 
@@ -59,7 +59,7 @@ const validate = ({ username, password, repassword, fname, lname, email, country
   }
   if (!password) {
     error.password = 'Password is required!';
-  } else if(password.length < 6) {
+  } else if (password.length < 6) {
     error.password = 'Password must be atleast 6 character long!';
   }
 
