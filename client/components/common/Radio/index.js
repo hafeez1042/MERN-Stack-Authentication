@@ -1,7 +1,6 @@
 // @flow
 import React from 'react';
 import { Field } from 'redux-form';
-import { asyncValidatingStyle } from './style.scss';
 
 type Props = {
   input: Object,
@@ -10,27 +9,8 @@ type Props = {
   defaultValue: string,
   options: Array<Object>,
 };
+
 export default ({ input, options, label, meta: { asyncValidating, touched, error } }: Props) => {
-  console.log(input)
-
-  const renderRadioButtons = ({ label, value }, index) => {
-    return (
-      <div className="form-check float-left" key={`${value}`} >
-        <Field
-          id={`${input.name}`}
-          component="input"
-          name={input.name}
-          type="radio"
-          value={value}
-          className="form-check-input"
-        />
-        <label className="pr-2 form-check-label" htmlFor={`${input.name}-${value}`}>
-          {label}
-        </label>
-      </div>
-    )
-  };
-
   return (
     <div className={`${touched && error ? 'has-error' : ''}`}>
       <div className={asyncValidating ? 'async-validating clearfix' : 'clearfix'}>
@@ -38,7 +18,23 @@ export default ({ input, options, label, meta: { asyncValidating, touched, error
           {label}
         </label>
         <div>
-          {options.map(renderRadioButtons)}
+          {options.map(({ label, value }) => {
+            return (
+              <div className="form-check float-left" key={`${value}`} >
+                <Field
+                  id={`${input.name}`}
+                  component="input"
+                  name={input.name}
+                  type="radio"
+                  value={value}
+                  className="form-check-input"
+                />
+                <label className="pr-2 form-check-label" htmlFor={`${input.name}-${value}`}>
+                  {label}
+                </label>
+              </div>
+            );
+          })}
         </div>
       </div>
       {touched && error && <span className="help-block"> {error} </span>}
