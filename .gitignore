@@ -18,4 +18,5 @@ crashlytics-build.properties
 .tern-project
 build-analyze.log
 dist/
+public/dist/
 logs/*.log%
