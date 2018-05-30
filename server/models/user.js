@@ -3,10 +3,21 @@ const bcrypt = require('bcrypt');
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-  name: {
+  fname: {
     type: String,
     required: true,
     trim: true,
+  },
+  lname: {
+    type: String,
+    trim: true,
+  },
+  username: {
+    type: String,
+    required: true,
+    trim: true,
+    unique: true,
+    index: true,
   },
   email: {
     type: String,
@@ -21,12 +32,22 @@ const userSchema = new Schema({
     set: (v) => bcrypt.hashSync(v, 12),
     select: false,
   },
+  country: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  gender: {
+    type: String,
+    required: true,
+    trim: true,
+  },
 });
 
 const User = mongoose.model('User', userSchema);
 
-const create = ({ name, email, password }) => {
-  const user = new User({ name, email, password });
+const create = ({ fname, lname, username, email, password, country, gender }) => {
+  const user = new User({ fname, lname, username, email, password, country, gender });
   return user.save();
 };
 
@@ -34,7 +55,12 @@ const findByEmail = (email, select) => {
   return User.findOne({ email }).select(select);
 };
 
+const findByUsername = (username, select) => {
+  return User.findOne({ username }).select(select);
+};
+
 module.exports = {
   create,
   findByEmail,
+  findByUsername,
 };

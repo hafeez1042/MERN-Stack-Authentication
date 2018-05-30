@@ -6,11 +6,15 @@ const jwt = require('../../../helpers/jwt');
 
 const register = (req, res) => {
   userModel.create({
-    name: req.body.name,
+    fname: req.body.fname,
+    lname: req.body.lname,
+    username: req.body.username,
     email: req.body.email,
     password: req.body.password,
-  }).then(({ name, email }) => {
-    res.json({ name, email });
+    country: req.body.country,
+    gender: req.body.gender,
+  }).then(({  fname, lname, username, email, country, gender }) => {
+    res.json({ fname, lname, username, email, country, gender });
   }).catch(error => {
     if (error.code === errorCodes.mongo.DUPLICATE) {
       res.status(errorCodes.http.CONFLICT).json({ message: messages.error.USER_ALREADY_EXISTS });
@@ -21,12 +25,13 @@ const register = (req, res) => {
 };
 
 const login = (req, res) => {
-  const { email, password } = req.body;
-  userModel.findByEmail(email, 'password email name').then(user => {
+  const { username, password } = req.body;
+  userModel.findByEmail(username, 'password username fname lname email country gender').then(user => {
     bcrypt.compare(password, user.password).then(() => {
-      jwt.generateJWT(user)
+      const { password, ...userWithoutPassword } = user;
+      jwt.generateJWT(userWithoutPassword)
         .then(response => {
-          res.json({ email, name: user.name, accessToken: response });
+          res.json({ user: userWithoutPassword, accessToken: response });
         }).catch(error => {
           res.status(errorCodes.http.BAD_REQUEST).json({ message: messages.error.UNKNOWN_ERROR, error });
         });
