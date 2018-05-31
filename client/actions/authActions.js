@@ -1,6 +1,6 @@
 import { APIInstance as axios, setAccessTokenHeader } from '../helpers/axios';
 import { REGISTER_API, LOGIN_API } from '../const/API';
-import { USER_REGISTER, USER_LOGIN } from '../const/actionTypes';
+import { USER_REGISTER, USER_LOGIN, USER_LOGOUT } from '../const/actionTypes';
 
 export const register = (data) => {
   return dispatch => {
@@ -44,6 +44,12 @@ export const login = (data) => {
 
 export const verifyAuth = () => {
 
+};
+
+export const logout = () => {
+  localStorage.removeItem('token');
+  sessionStorage.removeItem('token');
+  return { type: USER_LOGOUT };
 };
 
 const saveToken = (token, remember = false) => {

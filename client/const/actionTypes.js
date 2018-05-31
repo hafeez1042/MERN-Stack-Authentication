@@ -9,3 +9,5 @@ export const USER_LOGIN = {
   SUCCESS: 'USER_LOGIN_SUCCESS',
   FAIL: 'USER_LOGIN_FAIL',
 };
+
+export const USER_LOGOUT = 'USER_LOGOUT';
