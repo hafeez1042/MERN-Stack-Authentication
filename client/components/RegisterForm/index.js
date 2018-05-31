@@ -2,20 +2,29 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
-import Input from '../common/Input';
-import Select from '../common/Select';
-import Radio from '../common/Radio';
+import { Input, Select, Radio, Spinner } from '../common';
+
+import { register } from '../../actions/authActions';
 
 import countries from '../../const/countries';
 
 class RegisterForm extends Component {
   render() {
+    if (this.props.auth.user && this.props.auth.user.username) {
+      console.log(this.props.auth.user.username)
+      return <Redirect to="/dashboard" />;
+    }
+
     const { handleSubmit, submitting } = this.props;
     return (
-      <form onSubmit={handleSubmit(this.submitForm.bind(this))}>
-        <fieldset>
+      <form onSubmit={handleSubmit((value) => this.props.register(value))}>
+        {this.props.auth.error && this.props.auth.error.message ?
+          <div className="alert alert-danger" role="alert">{this.props.auth.error.message}</div>
+          : null
+        }
+        <fieldset disabled={this.props.auth.loading}>
           <Field component={Input} required name="username" label="User Name" placeholder="Enter username..." type="text" />
           <Field component={Input} required name="password" label="Password" placeholder="Enter password..." type="password" />
           <Field component={Input} required name="repassword" label="Repeat Password" placeholder="Enter password again..." type="password" />
@@ -42,12 +51,9 @@ class RegisterForm extends Component {
 
         <button className="btn btn-primary mt-3" disabled={submitting}>Register</button>
         <Link to="/login" className="btn btn-link mt-3">Login</Link>
+        {this.props.auth && this.props.auth.loading ? <Spinner overly /> : null}
       </form>
     );
-  }
-
-  submitForm(value) {
-    console.log(value);
   }
 }
 
@@ -92,10 +98,10 @@ const validate = ({ username, password, repassword, fname, lname, email, country
   return error;
 };
 
-const mapStateToProps = (state) => {
-  return state;
+const mapStateToProps = ({ auth }) => {
+  return { auth };
 };
-export default connect(mapStateToProps, {})(
+export default connect(mapStateToProps, { register })(
   reduxForm({
     form: 'RegisterForm',
     validate,

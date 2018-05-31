@@ -1,7 +1,7 @@
 import React from 'react';
 import { style } from './spinner.scss';
 
-export const Spinner = ({ size }) => {
+export default ({ size, overly }) => {
   let customeStyle = {};
   let sizeClass = '';
   if (size) {
@@ -18,7 +18,7 @@ export const Spinner = ({ size }) => {
   }
 
   return (
-    <div className={`${style} ${sizeClass} loading-spinner`} style={customeStyle}>
+    <div className={`${style} ${sizeClass} loading-spinner ${overly ? 'overly' : ''}`} style={customeStyle}>
       <div className="sk-circle1 sk-circle" />
       <div className="sk-circle2 sk-circle" />
       <div className="sk-circle3 sk-circle" />

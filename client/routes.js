@@ -4,7 +4,7 @@ import App from './components/App';
 import HomePage from './components/HomePage';
 import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
-import AboutPage from './components/AboutPage';
+import DashboardPage from './components/DashboardPage';
 
 export default () => {
   return (
@@ -14,7 +14,7 @@ export default () => {
           <Route path="/" exact component={HomePage} key="HomePage" />
           <Route path="/login" component={LoginPage} key="LoginPage" />
           <Route path="/register" component={RegisterPage} key="RegisterPage" />
-          <Route path="/dashboard" component={AboutPage} key="AboutPage" />
+          <Route path="/dashboard" component={DashboardPage} key="DashboardPage" />
         </Switch>
       </App>
     </Router>
