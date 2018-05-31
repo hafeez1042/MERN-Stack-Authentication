@@ -8,7 +8,6 @@ import { Input, Checkbox, Spinner } from '../common';
 
 import { login } from '../../actions/authActions';
 
-
 class LoginForm extends Component {
   render() {
     if (this.props.auth.user && this.props.auth.user.username) {

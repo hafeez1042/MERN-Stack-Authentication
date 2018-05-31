@@ -1,4 +1,4 @@
-import { USER_REGISTER, USER_LOGIN, USER_LOGOUT } from '../const/actionTypes';
+import { USER_REGISTER, USER_LOGIN, USER_LOGOUT, USER_VERIFY } from '../const/actionTypes';
 
 const INITIAL_STATE = {
   user: {},
@@ -22,8 +22,13 @@ export default (state = INITIAL_STATE, { type, payload }) => {
     case USER_LOGIN.FAIL:
       return { ...state, loading: false, error: payload.response.data };
 
+    case USER_VERIFY.SUCCESS:
+      return { ...state, user: payload, loading: false, error: {} };
+    case USER_VERIFY.FAIL:
+      return { ...INITIAL_STATE };
+
     case USER_LOGOUT:
-      return { ...state, ...INITIAL_STATE };
+      return { ...INITIAL_STATE };
 
     default:
       return state;

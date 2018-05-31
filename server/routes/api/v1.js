@@ -8,6 +8,7 @@ const router = express.Router();
 router.get('/', homeController.index);
 router.post('/register', authController.register);
 router.post('/login', authController.login);
+router.post('/verifyauth', authController.verifyAuth);
 
 router.get('/private', verifyJWTmiddleware, (req, res) => {
   res.json({ message: 'This is a private route, only authorized person can access this route', authUser: req.user});

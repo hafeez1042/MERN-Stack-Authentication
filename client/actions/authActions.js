@@ -1,6 +1,6 @@
 import { APIInstance as axios, setAccessTokenHeader } from '../helpers/axios';
-import { REGISTER_API, LOGIN_API } from '../const/API';
-import { USER_REGISTER, USER_LOGIN, USER_LOGOUT } from '../const/actionTypes';
+import { REGISTER_API, LOGIN_API, VERIFYAUTH_API } from '../const/API';
+import { USER_REGISTER, USER_LOGIN, USER_LOGOUT, USER_VERIFY } from '../const/actionTypes';
 
 export const register = (data) => {
   return dispatch => {
@@ -43,12 +43,28 @@ export const login = (data) => {
 };
 
 export const verifyAuth = () => {
+  return dispatch => {
+    const accessToken = sessionStorage.getItem('token') || localStorage.getItem('token');
+    if (!accessToken) {
+      removeToken();
+      return dispatch({ type: USER_VERIFY.FAIL });
+    }
 
+    axios.post(VERIFYAUTH_API, { token: accessToken })
+      .then(({ data }) => {
+        dispatch({
+          type: USER_VERIFY.SUCCESS,
+          payload: data,
+        });
+      }).catch(() => {
+        removeToken();
+        dispatch({ type: USER_VERIFY.FAIL });
+      });
+  };
 };
 
 export const logout = () => {
-  localStorage.removeItem('token');
-  sessionStorage.removeItem('token');
+  removeToken();
   return { type: USER_LOGOUT };
 };
 
@@ -58,3 +74,8 @@ const saveToken = (token, remember = false) => {
   }
   sessionStorage.setItem('token', token);
 };
+
+const removeToken = () => {
+  localStorage.removeItem('token');
+  sessionStorage.removeItem('token');
+}

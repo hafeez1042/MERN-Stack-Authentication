@@ -36,7 +36,7 @@ const login = (req, res) => {
   userModel.findByUsername(username, 'password username fname lname email country gender')
     .then(({ fname, lname, email, country, gender, password }) => {
       bcrypt.compare(reqPassword, password).then(() => {
-        const simpleUser =  { fname, lname, username, email, country, gender }
+        const simpleUser = { fname, lname, username, email, country, gender };
         jwt.generateJWT(simpleUser)
           .then(response => {
             res.json({ user: simpleUser, accessToken: response });
@@ -51,7 +51,17 @@ const login = (req, res) => {
     });
 };
 
+const verifyAuth = (req, res) => {
+  jwt.verifyJWT(req.body.token)
+    .then(result => {
+      res.json(result);
+    }).catch(error => {
+      res.status(400).json(error);å
+    })
+}
+
 module.exports = {
   register,
   login,
+  verifyAuth,
 };

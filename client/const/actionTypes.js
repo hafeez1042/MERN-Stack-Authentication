@@ -10,4 +10,10 @@ export const USER_LOGIN = {
   FAIL: 'USER_LOGIN_FAIL',
 };
 
+export const USER_VERIFY = {
+  PENDING: 'USER_VERIFY_PENDING',
+  SUCCESS: 'USER_VERIFY_SUCCESS',
+  FAIL: 'USER_VERIFY_FAIL',
+};
+
 export const USER_LOGOUT = 'USER_LOGOUT';
