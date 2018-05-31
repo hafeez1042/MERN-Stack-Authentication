@@ -13,7 +13,6 @@ import countries from '../../const/countries';
 class RegisterForm extends Component {
   render() {
     if (this.props.auth.user && this.props.auth.user.username) {
-      console.log(this.props.auth.user.username)
       return <Redirect to="/dashboard" />;
     }
 
