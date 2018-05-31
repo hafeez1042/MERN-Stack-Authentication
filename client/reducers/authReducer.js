@@ -1,4 +1,4 @@
-import { USER_REGISTER } from '../const/actionTypes';
+import { USER_REGISTER, USER_LOGIN } from '../const/actionTypes';
 
 const INITIAL_STATE = {
   user: {},
@@ -13,6 +13,13 @@ export default (state = INITIAL_STATE, { type, payload }) => {
     case USER_REGISTER.SUCCESS:
       return { ...state, user: payload, loading: false, error: {} };
     case USER_REGISTER.FAIL:
+      return { ...state, loading: false, error: payload.response.data };
+
+    case USER_LOGIN.PENDING:
+      return { ...state, loading: true };
+    case USER_LOGIN.SUCCESS:
+      return { ...state, user: payload, loading: false, error: {} };
+    case USER_LOGIN.FAIL:
       return { ...state, loading: false, error: payload.response.data };
     default:
       return state;

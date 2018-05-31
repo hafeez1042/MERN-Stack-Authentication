@@ -1,6 +1,6 @@
 import { APIInstance as axios, setAccessTokenHeader } from '../helpers/axios';
-import { REGISTER_API } from '../const/API';
-import { USER_REGISTER } from '../const/actionTypes';
+import { REGISTER_API, LOGIN_API } from '../const/API';
+import { USER_REGISTER, USER_LOGIN } from '../const/actionTypes';
 
 export const register = (data) => {
   return dispatch => {
@@ -13,8 +13,7 @@ export const register = (data) => {
           type: USER_REGISTER.SUCCESS,
           payload: user,
         });
-        redirectOnSuccess();
-      }).catch( err => {
+      }).catch(err => {
         dispatch({
           type: USER_REGISTER.FAIL,
           payload: err,
@@ -23,7 +22,31 @@ export const register = (data) => {
   };
 };
 
-const saveToken = (token, remember = true) => {
+export const login = (data) => {
+  return dispatch => {
+    dispatch({ type: USER_REGISTER.PENDING });
+    axios.post(LOGIN_API, data)
+      .then(({ data: { accessToken, user } }) => {
+        setAccessTokenHeader(accessToken);
+        saveToken(accessToken, data.remember);
+        dispatch({
+          type: USER_LOGIN.SUCCESS,
+          payload: user,
+        });
+      }).catch(err => {
+        dispatch({
+          type: USER_LOGIN.FAIL,
+          payload: err,
+        });
+      });
+  };
+};
+
+export const verifyAuth = () => {
+
+};
+
+const saveToken = (token, remember = false) => {
   if (remember) {
     localStorage.setItem('token', token);
   }

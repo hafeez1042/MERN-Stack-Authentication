@@ -14,7 +14,7 @@ const register = (req, res) => {
     country: req.body.country,
     gender: req.body.gender,
   }).then(({ fname, lname, username, email, country, gender }) => {
-    const user = { fname, lname, username, email, country, gender }
+    const user = { fname, lname, username, email, country, gender };
     jwt.generateJWT(user)
       .then(response => {
         res.json({ user, accessToken: response });
@@ -31,22 +31,24 @@ const register = (req, res) => {
 };
 
 const login = (req, res) => {
-  const { username, password } = req.body;
-  userModel.findByEmail(username, 'password username fname lname email country gender').then(user => {
-    bcrypt.compare(password, user.password).then(() => {
-      const { password, ...userWithoutPassword } = user;
-      jwt.generateJWT(userWithoutPassword)
-        .then(response => {
-          res.json({ user: userWithoutPassword, accessToken: response });
-        }).catch(error => {
-          res.status(errorCodes.http.BAD_REQUEST).json({ message: messages.error.UNKNOWN_ERROR, error });
-        });
+  const { username } = req.body;
+  const reqPassword = req.body.password;
+  userModel.findByUsername(username, 'password username fname lname email country gender')
+    .then(({ fname, lname, email, country, gender, password }) => {
+      bcrypt.compare(reqPassword, password).then(() => {
+        const simpleUser =  { fname, lname, username, email, country, gender }
+        jwt.generateJWT(simpleUser)
+          .then(response => {
+            res.json({ user: simpleUser, accessToken: response });
+          }).catch(error => {
+            res.status(errorCodes.http.BAD_REQUEST).json({ message: messages.error.UNKNOWN_ERROR, error });
+          });
+      }).catch(() => {
+        res.status(errorCodes.http.UNAUTHORIZED).json({ message: messages.error.INVALID_PASSWORD });
+      });
     }).catch(() => {
-      res.status(errorCodes.http.UNAUTHORIZED).json({ message: messages.error.INVALID_PASSWORD });
+      res.status(errorCodes.http.UNAUTHORIZED).json({ message: messages.error.INVALID_EMAIL });
     });
-  }).catch(() => {
-    res.status(errorCodes.http.UNAUTHORIZED).json({ message: messages.error.INVALID_EMAIL });
-  });
 };
 
 module.exports = {
