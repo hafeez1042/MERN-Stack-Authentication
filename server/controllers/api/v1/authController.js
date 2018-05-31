@@ -13,8 +13,14 @@ const register = (req, res) => {
     password: req.body.password,
     country: req.body.country,
     gender: req.body.gender,
-  }).then(({  fname, lname, username, email, country, gender }) => {
-    res.json({ fname, lname, username, email, country, gender });
+  }).then(({ fname, lname, username, email, country, gender }) => {
+    const user = { fname, lname, username, email, country, gender }
+    jwt.generateJWT(user)
+      .then(response => {
+        res.json({ user, accessToken: response });
+      }).catch(error => {
+        res.status(errorCodes.http.BAD_REQUEST).json({ message: messages.error.UNKNOWN_ERROR, error });
+      });
   }).catch(error => {
     if (error.code === errorCodes.mongo.DUPLICATE) {
       res.status(errorCodes.http.CONFLICT).json({ message: messages.error.USER_ALREADY_EXISTS });
